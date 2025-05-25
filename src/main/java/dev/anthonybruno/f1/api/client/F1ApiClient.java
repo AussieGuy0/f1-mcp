@@ -53,7 +53,6 @@ public class F1ApiClient {
                 .header("Accept", "application/json")
                 .build();
 
-        System.out.println(request);
         HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         
         if (response.statusCode() >= 200 && response.statusCode() < 300) {
@@ -89,5 +88,68 @@ public class F1ApiClient {
      */
     public ConstructorStandingsClient constructorStandingsClient() {
         return new ConstructorStandingsClient(this);
+    }
+
+    /**
+     * Returns a ConstructorsClient for accessing constructors endpoints.
+     */
+    public ConstructorsClient constructorsClient() {
+        return new ConstructorsClient(this);
+    }
+
+    /**
+     * Returns a LapsClient for accessing laps endpoints.
+     */
+    public LapsClient lapsClient() {
+        return new LapsClient(this);
+    }
+
+    /**
+     * Returns a PitstopsClient for accessing pitstops endpoints.
+     */
+    public PitstopsClient pitstopsClient() {
+        return new PitstopsClient(this);
+    }
+
+    /**
+     * Returns a QualifyingClient for accessing qualifying endpoints.
+     */
+    public QualifyingClient qualifyingClient() {
+        return new QualifyingClient(this);
+    }
+
+    /**
+     * Returns a RacesClient for accessing races endpoints.
+     */
+    public RacesClient racesClient() {
+        return new RacesClient(this);
+    }
+
+    /**
+     * Returns a ResultsClient for accessing results endpoints.
+     */
+    public ResultsClient resultsClient() {
+        return new ResultsClient(this);
+    }
+
+    /**
+     * Returns a SeasonsClient for accessing seasons endpoints.
+     */
+    public SeasonsClient seasonsClient() {
+        return new SeasonsClient(this);
+    }
+
+    /**
+     * Returns a SprintClient for accessing sprint endpoints.
+     */
+    public SprintClient sprintClient() {
+        return new SprintClient(this);
+    }
+
+    /**
+     * Returns a StatusClient for accessing status endpoints.
+     */
+    public StatusClient statusClient() {
+        return new StatusClient(this);
     }
 }

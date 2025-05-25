@@ -1,5 +1,6 @@
 package dev.anthonybruno.f1.api.client;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.IOException;
 
@@ -17,7 +18,7 @@ public class JsonUtils {
      * @return the parsed object
      * @throws IOException if an error occurs during parsing
      */
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
     public static <T> T fromJson(String json, Class<T> clazz) throws IOException {
         if (json == null || json.isEmpty()) {

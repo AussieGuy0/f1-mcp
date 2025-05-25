@@ -17,5 +17,8 @@ public record MRData(
         @JsonProperty("DriverTable") DriverTable driverTable,
         @JsonProperty("StandingsTable") StandingsTable standingsTable,
         @JsonProperty("ConstructorTable") ConstructorTable constructorTable,
-        @JsonProperty("ConstructorStandingsTable") ConstructorStandingsTable constructorStandingsTable) {
+        @JsonProperty("ConstructorStandingsTable") ConstructorStandingsTable constructorStandingsTable,
+        @JsonProperty("RaceTable") RaceTable raceTable,
+        @JsonProperty("SeasonsTable") SeasonsTable seasonsTable,
+        @JsonProperty("StatusTable") StatusTable statusTable) {
 }

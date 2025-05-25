@@ -1,6 +1,6 @@
 # F1 API Client
 
-A Java client for the jolpica-f1 API, which provides Formula 1 data, and an optional MCP server exposing F1 data as Model Context Protocol tools.
+A Java client for the [jolpica-f1](https://github.com/jolpica/jolpica-f1) API, which provides Formula 1 data, and a MCP server.
 
 ## Table of Contents
 - [Features](#features)
@@ -8,10 +8,6 @@ A Java client for the jolpica-f1 API, which provides Formula 1 data, and an opti
 - [Installation & Build](#installation--build)
 - [Usage](#usage)
   - [Creating a Client](#creating-a-client)
-  - [Circuits API](#circuits-api)
-  - [Drivers API](#drivers-api)
-  - [Driver Standings API](#driver-standings-api)
-  - [Constructor Standings API](#constructor-standings-api)
 - [MCP Server](#mcp-server)
 - [Testing](#testing)
 - [API Documentation](#api-documentation)
@@ -48,90 +44,6 @@ F1ApiClient apiClient = new F1ApiClient();
 F1ApiClient apiClient = new F1ApiClient("https://api.jolpi.ca");
 ```
 
-### Circuits API
-
-```java
-CircuitsClient circuitsClient = apiClient.circuitsClient();
-
-// Get all circuits
-List<Circuit> circuits = circuitsClient.getAllCircuits();
-
-// Get circuits with pagination
-List<Circuit> circuits = circuitsClient.getAllCircuits(30, 10); // offset 30, limit 10
-
-// Get circuits for a specific season
-List<Circuit> circuits = circuitsClient.getCircuitsBySeason("2023");
-
-// Get a specific circuit by ID
-Circuit circuit = circuitsClient.getCircuitById("monza");
-
-// Get circuits for a specific round of a season
-List<Circuit> circuits = circuitsClient.getCircuitsByRound("2023", "1");
-```
-
-### Drivers API
-
-```java
-DriversClient driversClient = apiClient.driversClient();
-
-// Get all drivers
-List<Driver> drivers = driversClient.getAllDrivers();
-
-// Get drivers with pagination
-List<Driver> drivers = driversClient.getAllDrivers(30, 10); // offset 30, limit 10
-
-// Get drivers for a specific season
-List<Driver> drivers = driversClient.getDriversBySeason("2023");
-
-// Get a specific driver by ID
-Driver driver = driversClient.getDriverById("hamilton");
-
-// Get drivers for a specific round of a season
-List<Driver> drivers = driversClient.getDriversByRound("2023", "1");
-
-// Get drivers for a specific circuit
-List<Driver> drivers = driversClient.getDriversByCircuit("monza");
-
-// Get drivers for a specific constructor
-List<Driver> drivers = driversClient.getDriversByConstructor("mercedes");
-```
-
-### Driver Standings API
-
-```java
-DriverStandingsClient driverStandingsClient = apiClient.driverStandingsClient();
-
-// Get driver standings for a season
-List<DriverStanding> standings = driverStandingsClient.getDriverStandingsBySeason("2023");
-
-// Get driver standings for a specific round
-List<DriverStanding> standings = driverStandingsClient.getDriverStandingsByRound("2023", "1");
-
-// Get driver standings for a specific driver in a season
-List<DriverStanding> standings = driverStandingsClient.getDriverStandingsByDriver("2023", "hamilton");
-
-// Get driver standings for a specific position in a season
-List<DriverStanding> standings = driverStandingsClient.getDriverStandingsByPosition("2023", "1");
-```
-
-### Constructor Standings API
-
-```java
-ConstructorStandingsClient constructorStandingsClient = apiClient.constructorStandingsClient();
-
-// Get constructor standings for a season
-List<ConstructorStanding> standings = constructorStandingsClient.getConstructorStandingsBySeason("2023");
-
-// Get constructor standings for a specific round
-List<ConstructorStanding> standings = constructorStandingsClient.getConstructorStandingsByRound("2023", "1");
-
-// Get constructor standings for a specific constructor in a season
-List<ConstructorStanding> standings = constructorStandingsClient.getConstructorStandingsByConstructor("2023", "mercedes");
-
-// Get constructor standings for a specific position in a season
-List<ConstructorStanding> standings = constructorStandingsClient.getConstructorStandingsByPosition("2023", "1");
-```
-
 ## MCP Server
 
 This project includes an optional MCP (Model Context Protocol) server that exposes F1 data as MCP tools over HTTP (Jetty).
@@ -151,10 +63,35 @@ http://localhost:8080/f1
 ```
 
 ### Exposed Tools
+All major F1 endpoints are available as MCP tools:
+
 - `f1 circuits`: Returns all circuits
 - `f1 drivers`: Returns all drivers
+- `f1 constructors`: Retrieve all F1 constructors in the database
+- `f1 laps`: Retrieve all laps for the current F1 season
+- `f1 pitstops`: Retrieve all pitstops for the current F1 season
+- `f1 qualifying`: Retrieve all qualifying results for the current F1 season
+- `f1 races`: Retrieve all F1 races in the database
+- `f1 results`: Retrieve all race results for the current F1 season
+- `f1 results by season and round`: Retrieve all race results for a specific F1 season and round (requires `season` and `round`)
+- `f1 seasons`: Retrieve all F1 seasons available in the database
+- `f1 sprint`: Retrieve all sprint race results for the current F1 season
+- `f1 status`: Retrieve all possible driver finishing statuses in F1 races
+- `f1 driver standings by season`: Retrieve all driver standings for a specific F1 season (requires `season`)
+- `f1 constructor standings by season`: Retrieve all constructor standings for a specific F1 season (requires `season`)
 
-(You can extend the server to expose more tools by editing `F1Mcp.java`.)
+### Integrate with Cursor
+Add the following to the `mcp.json` config file.
+
+``json
+{
+  "mcpServers": {
+    "f1": {
+      "url": "http://localhost:8080/sse"
+    }
+  }
+}
+```
 
 ## Testing
 
