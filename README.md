@@ -83,7 +83,7 @@ All major F1 endpoints are available as MCP tools:
 ### Integrate with Cursor
 Add the following to the `mcp.json` config file.
 
-``json
+```json
 {
   "mcpServers": {
     "f1": {
